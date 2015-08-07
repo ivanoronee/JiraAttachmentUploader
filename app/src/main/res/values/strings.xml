@@ -8,4 +8,7 @@
     <string name="username_label">username</string>
     <string name="username_hint">John_Doe</string>
     <string name="password_label">password</string>
+    <string name="ticket_placeholder">jira ticket id</string>
+    <string name="upload_button_label">upload attachment</string>
+    <string name="select_an_image_to_upload">select image</string>
 </resources>

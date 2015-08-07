@@ -5,7 +5,48 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ticketNumberInput"
+        android:autoText="false"
+        android:hint="@string/ticket_placeholder"
+        android:inputType="text"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/imagePreview"
+        android:layout_alignEnd="@+id/imagePreview" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imagePreview"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/ticketNumberInput"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/upload_button_label"
+        android:id="@+id/uploadButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:enabled="false"
+        android:layout_alignRight="@+id/ticketNumberInput" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/select_an_image_to_upload"
+        android:id="@+id/uploadTrigger"
+        android:layout_below="@+id/imagePreview"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="87dp"
+        android:clickable="true"/>
 
 </RelativeLayout>

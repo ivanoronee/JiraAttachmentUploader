@@ -23,6 +23,13 @@
         <dex dex="/Users/ivan/git/JiraAttachmentUploader/app/build/intermediates/pre-dexed/debug/classes-b1a634d2e8cfa1b30c8ec0cab65784326d50684d.jar" />
     </item>
     <item
+        jar="/Users/ivan/.gradle/caches/modules-2/files-2.1/com.loopj.android/android-async-http/1.4.8/77bbfe240e437ecb396d982afa0d3bd4f9090ba7/android-async-http-1.4.8.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="77bbfe240e437ecb396d982afa0d3bd4f9090ba7">
+        <dex dex="/Users/ivan/git/JiraAttachmentUploader/app/build/intermediates/pre-dexed/debug/android-async-http-1.4.8-7005c091981adee63a123ad976d4c498057d2d46.jar" />
+    </item>
+    <item
         jar="/Users/ivan/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.0.0/support-annotations-22.0.0.jar"
         jumboMode="false"
         revision="21.1.2"
