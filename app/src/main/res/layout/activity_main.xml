@@ -32,11 +32,12 @@
         android:layout_height="wrap_content"
         android:text="@string/upload_button_label"
         android:id="@+id/uploadButton"
-        android:layout_alignParentBottom="true"
+        android:enabled="false"
+        android:layout_above="@+id/uploadProgressBar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:enabled="false"
-        android:layout_alignRight="@+id/ticketNumberInput" />
+        android:layout_alignRight="@+id/imagePreview"
+        android:layout_alignEnd="@+id/imagePreview" />
 
     <Button
         android:layout_width="wrap_content"
@@ -46,5 +47,15 @@
         android:layout_below="@+id/imagePreview"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="87dp" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/uploadProgressBar"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:indeterminate="true"
+        android:visibility="invisible" />
 
 </RelativeLayout>

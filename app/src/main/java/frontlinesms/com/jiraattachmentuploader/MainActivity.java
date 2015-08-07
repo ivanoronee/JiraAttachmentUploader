@@ -16,7 +16,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -40,6 +42,7 @@ public class MainActivity extends ActionBarActivity {
     private Button clickToChooseView;
     private EditText ticketNumberInput;
     private Uri fileUri;
+    private ProgressBar uploadProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,7 @@ public class MainActivity extends ActionBarActivity {
         uploadButton = (Button) findViewById(R.id.uploadButton);
         imagePreview = (ImageView) findViewById(R.id.imagePreview);
         ticketNumberInput = (EditText) findViewById(R.id.ticketNumberInput);
+        uploadProgressBar = (ProgressBar) findViewById(R.id.uploadProgressBar);
 
         clickToChooseView = (Button) findViewById(R.id.uploadTrigger);
         clickToChooseView.setOnClickListener(new View.OnClickListener() {
@@ -175,23 +179,36 @@ public class MainActivity extends ActionBarActivity {
         client.post(url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {
-                // called before request is started
+                uploadProgressBar.setVisibility(View.VISIBLE);
+                uploadButton.setEnabled(false);
                 Log.i(TAG, "starting upload");
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-                // called when response HTTP status is "200 OK"
                 Log.i(TAG, "successful upload");
-
+                Toast.makeText(getApplicationContext(), "Image was successfully uploaded", Toast.LENGTH_LONG).show();
+                uploadProgressBar.setVisibility(View.INVISIBLE);
+                uploadButton.setEnabled(true);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 // called when request is retried
-                Log.e(TAG, "response status: " + statusCode);
-                //Log.e(TAG, "response body" + new String(responseBody));
-                Log.e(TAG, "failed upload upload");
+                uploadProgressBar.setVisibility(View.INVISIBLE);
+                uploadButton.setEnabled(true);
+
+                if (statusCode == 0 ){
+                    Toast.makeText(getApplicationContext(), "internet connection reset, please try again", Toast.LENGTH_LONG).show();
+                }
+                else if (statusCode == 404) {
+                    Toast.makeText(getApplicationContext(), "Ticket not available", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Jira error, status: "+statusCode, Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "response status: " + statusCode);
+                    Log.e(TAG, "failed upload upload");
+                }
             }
         });
     }
