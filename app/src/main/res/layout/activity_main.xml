@@ -38,15 +38,13 @@
         android:enabled="false"
         android:layout_alignRight="@+id/ticketNumberInput" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/select_an_image_to_upload"
         android:id="@+id/uploadTrigger"
         android:layout_below="@+id/imagePreview"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="87dp"
-        android:clickable="true"/>
+        android:layout_marginTop="87dp" />
 
 </RelativeLayout>

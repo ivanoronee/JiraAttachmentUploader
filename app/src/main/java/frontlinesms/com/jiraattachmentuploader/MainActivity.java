@@ -37,7 +37,7 @@ public class MainActivity extends ActionBarActivity {
     private static int REQUEST_LOAD_IMAGE = 1;
     private Button uploadButton;
     private ImageView imagePreview;
-    private TextView clickToChooseView;
+    private Button clickToChooseView;
     private EditText ticketNumberInput;
     private Uri fileUri;
 
@@ -52,7 +52,7 @@ public class MainActivity extends ActionBarActivity {
         imagePreview = (ImageView) findViewById(R.id.imagePreview);
         ticketNumberInput = (EditText) findViewById(R.id.ticketNumberInput);
 
-        clickToChooseView = (TextView) findViewById(R.id.uploadTrigger);
+        clickToChooseView = (Button) findViewById(R.id.uploadTrigger);
         clickToChooseView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,8 +62,6 @@ public class MainActivity extends ActionBarActivity {
                 );
                 startActivityForResult(intent, REQUEST_LOAD_IMAGE);
             }
-
-            ;
         });
 
         uploadButton.setOnClickListener(new View.OnClickListener() {
@@ -192,7 +190,7 @@ public class MainActivity extends ActionBarActivity {
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 // called when request is retried
                 Log.e(TAG, "response status: " + statusCode);
-                Log.e(TAG, "response body" + new String(responseBody));
+                //Log.e(TAG, "response body" + new String(responseBody));
                 Log.e(TAG, "failed upload upload");
             }
         });
