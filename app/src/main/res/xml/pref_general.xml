@@ -1,0 +1,26 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:key="jira_url"
+        android:title="@string/url_label"
+        android:defaultValue="@string/url_hint"
+        android:selectAllOnFocus="true"
+        android:inputType="textUri" />
+
+    <EditTextPreference
+        android:key="jira_username"
+        android:title="@string/username_label"
+        android:defaultValue="@string/username_hint"
+        android:selectAllOnFocus="true"
+        android:inputType="text"
+        android:singleLine="true"
+        android:maxLines="1" />
+
+
+    <EditTextPreference
+        android:key="jira_password"
+        android:title="@string/password_label"
+        android:inputType="textPassword"
+        android:selectAllOnFocus="true" />
+
+</PreferenceScreen>

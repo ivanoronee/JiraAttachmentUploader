@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">JiraAttachmentUploader</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="url_label">jira link</string>
+    <string name="url_hint">mycompany.jira.com</string>
+    <string name="username_label">username</string>
+    <string name="username_hint">John_Doe</string>
+    <string name="password_label">password</string>
+</resources>
