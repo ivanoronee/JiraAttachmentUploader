@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -39,7 +38,7 @@ public class MainActivity extends ActionBarActivity {
     private static int REQUEST_LOAD_IMAGE = 1;
     private Button uploadButton;
     private ImageView imagePreview;
-    private Button clickToChooseView;
+    private Button selectImageButton;
     private EditText ticketNumberInput;
     private Uri fileUri;
     private ProgressBar uploadProgressBar;
@@ -56,8 +55,8 @@ public class MainActivity extends ActionBarActivity {
         ticketNumberInput = (EditText) findViewById(R.id.ticketNumberInput);
         uploadProgressBar = (ProgressBar) findViewById(R.id.uploadProgressBar);
 
-        clickToChooseView = (Button) findViewById(R.id.uploadTrigger);
-        clickToChooseView.setOnClickListener(new View.OnClickListener() {
+        selectImageButton = (Button) findViewById(R.id.selectImageButton);
+        selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(
