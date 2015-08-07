@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,35 +20,20 @@ import android.widget.TextView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
 
     private final String TAG = this.getClass().getSimpleName();
     private final int RESULT_SETTINGS = 1;
+    private final String JIRA_ATTACHMENT_ENDPOINT = "https://%s/rest/api/2/issue/%s/attachments";
     private static int REQUEST_LOAD_IMAGE = 1;
     private Button uploadButton;
     private ImageView imagePreview;
@@ -88,8 +71,6 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View view) {
                 uploadAttachment(fileUri);
             }
-
-            ;
         });
 
         if (Intent.ACTION_SEND.equals(intent.getAction()) && intent.getType() != null && intent.getType().startsWith("image/")) {
@@ -103,7 +84,6 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -127,10 +107,6 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_SETTINGS) {
-            Context context = getApplicationContext();
-            //setting updated, do anything fancy if necessary.
-        }
 
         if (requestCode == REQUEST_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri imageUri = data.getData();
@@ -149,7 +125,13 @@ public class MainActivity extends ActionBarActivity {
         uploadButton.setEnabled(true);
     }
 
-    private String getRealPathFromURI(Uri contentURI) {
+    /**
+     * Gets the actual location of an image path from the file system.
+     *
+     * @param contentURI
+     * @return
+     */
+    private String getRealImagePathFromURI(Uri contentURI) {
         String result;
         Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
         if (cursor == null) { // Source is Dropbox or other similar local file path
@@ -174,24 +156,22 @@ public class MainActivity extends ActionBarActivity {
         String username = prefs.getString("jira_username", "");
         String password = prefs.getString("jira_password", "");
 
-        String url = String.format("https://%s/rest/api/2/issue/%s/attachments",
-                prefs.getString("jira_url", ""), ticketNumberInput.getText());
-
+        String url = String.format(JIRA_ATTACHMENT_ENDPOINT, prefs.getString("jira_url", ""), ticketNumberInput.getText());
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.setBasicAuth(username, password);
         client.addHeader("X-Atlassian-Token", "nocheck");
 
-        Log.i(TAG, "file location: "+fileUri.getPath());
+        Log.i(TAG, "file location: " + fileUri.getPath());
 
-        File myFile = new File(getRealPathFromURI(fileUri));
+        File myFile = new File(getRealImagePathFromURI(fileUri));
         RequestParams params = new RequestParams();
         try {
             params.put("file", myFile);
         } catch (FileNotFoundException e) {
-           Log.e(TAG, "could not find to upload");
-        }catch (IOException e) {
-           Log.e(TAG, "IO exception not find to upload");
+            Log.e(TAG, "could not find to upload");
+        } catch (IOException e) {
+            Log.e(TAG, "IO exception not find to upload");
         }
 
         client.post(url, params, new AsyncHttpResponseHandler() {
@@ -211,7 +191,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 // called when request is retried
-                Log.e(TAG, "response status: "+statusCode);
+                Log.e(TAG, "response status: " + statusCode);
                 Log.e(TAG, "response body" + new String(responseBody));
                 Log.e(TAG, "failed upload upload");
             }
